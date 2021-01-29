@@ -1,0 +1,16 @@
+i2c:
+  - id: bus_a
+    sda: 21
+    scl: 22
+    scan: True
+  - id: bus_b
+    sda: 32
+    scl: 33
+    frequency: 800kHz
+    scan: True
+  
+mcp23017:
+  
+  - id: "Obsidian_expander"
+    i2c_id: bus_b
+    address: 0x27
