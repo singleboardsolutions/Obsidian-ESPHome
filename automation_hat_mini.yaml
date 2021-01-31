@@ -1,0 +1,75 @@
+i2c:
+  - id: bus_a
+    sda: 21
+    scl: 22
+    scan: True
+  - id: bus_b
+    sda: 32
+    scl: 33
+    frequency: 800kHz
+    scan: True
+  
+mcp23017:
+  
+  - id: "Obsidian_expander"
+    i2c_id: bus_b
+    address: 0x27
+     
+binary_sensor:
+
+  - platform: gpio
+    name: "Input 1"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 8
+      inverted: False      
+      mode: INPUT
+
+  - platform: gpio
+    name: "Input 2"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 2
+      inverted: False     
+      mode: INPUT 
+      
+  - platform: gpio
+    name: "Input 3"
+    pin:
+      number: 14
+      inverted: False
+      mode: INPUT      
+
+switch:
+
+  - platform: gpio
+    name: "Relay 1"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 7
+      mode: OUTPUT     
+      inverted: False    
+      
+  - platform: gpio
+    name: "Output 1"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 3
+      mode: OUTPUT
+      inverted: False     
+      
+  - platform: gpio
+    name: "Output 2"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 6
+      mode: OUTPUT
+      inverted: False  
+      
+  - platform: gpio
+    name: "Output 3"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 4
+      mode: OUTPUT
+      inverted: False  
