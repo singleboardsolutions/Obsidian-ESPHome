@@ -1,0 +1,99 @@
+i2c:
+  - id: bus_a
+    sda: 21
+    scl: 22
+    scan: True
+  - id: bus_b
+    sda: 32
+    scl: 33
+    frequency: 800kHz
+    scan: True
+  
+mcp23017:
+  
+  - id: "Obsidian_expander"
+    i2c_id: bus_b
+    address: 0x27
+     
+spi:
+  clk_pin: GPIO18
+  mosi_pin: GPIO23
+
+display:
+  - platform: st7789v
+    backlight_pin: 
+      mcp23017: Obsidian_expander
+      number: 8
+    cs_pin: GPIO5
+    dc_pin: GPIO13
+    reset_pin: GPIO23
+    lambda: |-
+      it.line(0, 0, 100, 100);
+
+binary_sensor:
+
+  - platform: gpio
+    name: "Joystick Up"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 9
+      inverted: True     
+      mode: INPUT
+
+  - platform: gpio
+    name: "Joystick Down"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 1
+      inverted: True     
+      mode: INPUT 
+      
+  - platform: gpio
+    name: "Joystick Left"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 10
+      inverted: True
+      mode: INPUT     
+
+  - platform: gpio
+    name: "Joystick Right"
+    pin:
+      number: 2
+      inverted: True     
+      mode: INPUT
+      
+  - platform: gpio
+    name: "Joystick Press"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 0
+      inverted: True     
+      mode: INPUT
+      
+  - platform: gpio
+    name: "Left"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 3
+      inverted: True    
+      mode: INPUT
+      
+  - platform: gpio
+    name: "Right"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 4
+      inverted: True     
+      mode: INPUT      
+      
+switch:
+
+  - platform: gpio
+    name: "Backlight"
+    pin:
+      mcp23017: Obsidian_expander
+      number: 8
+      mode: OUTPUT     
+      inverted: False    
+      
