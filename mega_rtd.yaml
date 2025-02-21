@@ -1,0 +1,43 @@
+i2c:
+  - id: bus_a
+    sda: 21
+    scl: 22
+    frequency: 400kHz
+    scan: True
+  - id: bus_b
+    sda: 32
+    scl: 33
+    frequency: 800kHz
+    scan: True
+
+i2c_device:
+  - id: "RTD_HAT"
+    i2c_id: bus_a
+    address: 0x40
+    
+mcp23017:
+  - id: "Obsidian_expander"
+    i2c_id: bus_b
+    address: 0x27
+    
+sensor:
+  - platform: template
+    name: "Channel 1"
+    lambda: |-
+      float temp1;
+      id(RTD_HAT).read_bytes(0x00, reinterpret_cast<uint8_t *>(&temp1), 4);
+      return temp1;
+    update_interval: 2s
+  - platform: template
+    name: "Channel 2"
+    lambda: |-
+      float temp1;
+      id(RTD_HAT).read_bytes(0x04, reinterpret_cast<uint8_t *>(&temp1), 4);
+      return temp1;
+    update_interval: 2s 
+  #- value2: id("RTD_HAT").read_bytes(0x08, 4)  # Read 4 bytes starting from register (4*channel-1) 
+  #- value3: id("RTD_HAT").read_bytes(0x0C, 4)  # Read 4 bytes starting from register (4*channel-1)
+  #- value4: id("RTD_HAT").read_bytes(0x10, 4)  # Read 4 bytes starting from register (4*channel-1)
+  #- value5: id("RTD_HAT").read_bytes(0x14, 4)  # Read 4 bytes starting from register (4*channel-1)
+  #- value6: id("RTD_HAT").read_bytes(0x18, 4)  # Read 4 bytes starting from register (4*channel-1)
+  #- value7: id("RTD_HAT").read_bytes(0x1C, 4)  # Read 4 bytes starting from register (4*channel-1)
